@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imóveis | Sayuri</title>
+<meta name="description" content="Imóveis à venda e para alugar, com fotos e informações completas.">
+<style>
+:root{--cor:#5a2a1a;--cor-esc:#3a1f14;--fundo:#f4eedf;--card:#fffdf7;--txt:#2e1d15;--suave:#7a6a5f;--borda:#e4d9c3}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--fundo);color:var(--txt);line-height:1.5}
+a{color:inherit;text-decoration:none}
+header{padding:18px 20px}
+header .in{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{margin:0;font-size:1.15rem;font-family:Georgia,'Times New Roman',serif;letter-spacing:.14em;text-transform:uppercase;color:var(--cor-esc)}
+header h1 a{display:block}
+header small{display:block;font-weight:400;font-size:.62rem;letter-spacing:.2em;color:var(--suave)}
+nav{display:flex;gap:22px;font-size:.9rem}
+nav a:hover{color:var(--cor)}
+@media(max-width:600px){nav{display:none}}
+.btn{display:inline-block;background:#25d366;color:#fff;font-weight:600;padding:10px 18px;border-radius:6px;border:0;cursor:pointer;font-size:1rem}
+.btn:hover{filter:brightness(.95)}
+.btn.sec{background:var(--cor);}
+main{max-width:1100px;margin:auto;padding:20px}
+.filtros{background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.filtros label{font-size:.75rem;color:var(--suave);display:block;margin-bottom:2px}
+.filtros input,.filtros select{width:100%;padding:9px;border:1px solid var(--borda);border-radius:8px;font-size:.95rem;background:#fff}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--borda);transition:.15s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.1)}
+.foto{aspect-ratio:4/3;background:linear-gradient(135deg,#e6d6bb,#cfae8c);position:relative;display:flex;align-items:center;justify-content:center;color:#8a6f5a;font-size:.9rem}
+.foto img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;top:10px;left:10px;background:var(--cor);color:#fff;font-size:.75rem;padding:3px 10px;border-radius:20px;font-weight:600}
+.tag.dest{left:auto;right:10px;background:#b9825f}
+.card .c{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.preco{font-size:1.3rem;font-weight:700;color:var(--cor-esc)}
+.tit{font-weight:600}
+.loc{color:var(--suave);font-size:.9rem}
+.carac{display:flex;gap:14px;color:var(--suave);font-size:.88rem;margin-top:auto;padding-top:8px;border-top:1px solid var(--borda)}
+.vazio{text-align:center;color:var(--suave);padding:50px 0}
+/* detalhe */
+.voltar{display:inline-block;margin-bottom:14px;color:var(--cor);font-weight:600}
+.det{display:grid;grid-template-columns:1.5fr 1fr;gap:24px}
+@media(max-width:800px){.det{grid-template-columns:1fr}}
+.galeria .grande{aspect-ratio:4/3;background:#dde;border-radius:12px;overflow:hidden;cursor:zoom-in;display:flex;align-items:center;justify-content:center;color:#7a8a84}
+.galeria .grande img{width:100%;height:100%;object-fit:cover}
+.mini{display:flex;gap:8px;margin-top:8px;overflow-x:auto;padding-bottom:4px}
+.mini img{width:80px;height:60px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;flex:none}
+.mini img.ativa{border-color:var(--cor)}
+.box{background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:18px}
+.box h2{margin:0 0 6px;font-size:1.15rem}
+.box .preco{font-size:1.7rem;margin:6px 0}
+.dados{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.dados div{background:var(--fundo);border-radius:8px;padding:8px 10px;font-size:.9rem}
+.dados b{display:block;font-size:1.05rem}
+.sec{margin-top:22px}
+.sec h3{margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:#eadfc8;color:var(--cor-esc);padding:4px 12px;border-radius:20px;font-size:.85rem}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:50}
+.lb.on{display:flex}
+.lb img{max-width:94vw;max-height:88vh}
+.lb button{position:absolute;background:none;border:0;color:#fff;font-size:2.4rem;cursor:pointer;padding:14px}
+.lb .x{top:6px;right:10px}.lb .p{left:6px}.lb .n{right:6px}
+h2,.tit,.preco{font-family:Georgia,'Times New Roman',serif}
+.hero{display:grid;grid-template-columns:1fr 1.25fr;gap:30px;align-items:center;margin:6px 0 34px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.hero h2{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:0 0 14px;color:var(--cor-esc);font-weight:500}
+.hero p{color:var(--suave);max-width:420px;margin:0 0 22px}
+.hero .btn{background:var(--cor);border-radius:4px;padding:13px 26px}
+.hero .img{aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#b9825f,#7a4a32 55%,#3a1f14);display:flex;align-items:center;justify-content:center;color:#f4eedf;font-size:.85rem;opacity:.95}
+.hero .img img{width:100%;height:100%;object-fit:cover}
+.titulo-sec{font-family:Georgia,serif;font-size:1.6rem;margin:10px 0 14px;color:var(--cor-esc);font-weight:500}
+footer{text-align:center;color:var(--suave);font-size:.85rem;padding:30px 10px}
+.wa-fixo{position:fixed;right:16px;bottom:16px;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1><a href="#/" id="nome-site">Imóveis<small id="sub-site"></small></a></h1>
+  <nav><a href="#/">Início</a><a href="#/" onclick="setTimeout(()=>document.getElementById('imoveis')?.scrollIntoView({behavior:'smooth'}),50)">Imóveis</a><a id="wa-topo" target="_blank" rel="noopener">Contato</a></nav>
+</div></header>
+<main id="app"><div class="vazio">Carregando imóveis…</div></main>
+<footer id="rodape"></footer>
+<a class="btn wa-fixo" id="wa-fixo" target="_blank" rel="noopener">💬 Fale comigo</a>
+<div class="lb" id="lb"><button class="x" id="lbx">×</button><button class="p" id="lbp">‹</button><img id="lbi" alt=""><button class="n" id="lbn">›</button></div>
+
+<script>
+/* ============ CONFIGURAÇÃO (só mexer aqui) ============ */
+const CONFIG = {
+  nome: "Sayuri Imóveis",            // nome que aparece no topo
+  subtitulo: "Venda e aluguel",
+  whatsapp: "5500000000000",         // país + DDD + número, só dígitos. Ex.: 5541999999999
+  email: "",
+  heroTitulo: "Conectando você à casa dos sonhos",
+  heroTexto: "Imóveis selecionados para venda e aluguel, com fotos e todas as informações que você precisa.",
+  heroImagem: "fotos/capa.jpg",   // foto grande do topo (coloque na pasta fotos/). Se não existir, aparece um fundo marrom.
+  // Deixe vazio para ler o arquivo imoveis.csv deste site.
+  // Ou cole o link da planilha Google publicada como CSV (veja o LEIA-ME).
+  planilhaCSV: ""
+};
+/* ====================================================== */
+
+let IMOVEIS = [];
+const $ = s => document.querySelector(s);
+const brl = v => v ? Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}) : '';
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function parseCSV(t){
+  const rows=[];let row=[],cur='',q=false;
+  for(let i=0;i<t.length;i++){
+    const c=t[i];
+    if(q){ if(c=='"'){ if(t[i+1]=='"'){cur+='"';i++} else q=false } else cur+=c }
+    else if(c=='"') q=true;
+    else if(c==','){row.push(cur);cur=''}
+    else if(c=='\n'){row.push(cur);rows.push(row);row=[];cur=''}
+    else if(c!='\r') cur+=c;
+  }
+  if(cur||row.length){row.push(cur);rows.push(row)}
+  const h=rows.shift().map(x=>x.trim().toLowerCase());
+  return rows.filter(r=>r.some(x=>x.trim())).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])));
+}
+const lista = s => (s||'').split('|').map(x=>x.trim()).filter(Boolean);
+const num = s => Number(String(s||'').replace(/[^\d.,]/g,'').replace(/\./g,'').replace(',','.'))||0;
+
+function foto(src){ // aceita nome de arquivo da pasta fotos/ ou link completo
+  return /^https?:/.test(src)?src:'fotos/'+src;
+}
+function waLink(msg){
+  return 'https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(msg);
+}
+
+async function carregar(){
+  const url = CONFIG.planilhaCSV || 'imoveis.csv';
+  const r = await fetch(url,{cache:'no-store'});
+  if(!r.ok) throw new Error('Não consegui abrir '+url);
+  IMOVEIS = parseCSV(await r.text())
+    .filter(i=>(i.status||'ativo').toLowerCase()!=='vendido' && (i.status||'ativo').toLowerCase()!=='inativo')
+    .map(i=>({...i, preco:num(i.preco), condominio:num(i.condominio), iptu:num(i.iptu),
+      fotos:lista(i.fotos), comodidades:lista(i.comodidades)}));
+}
+
+function cardHTML(i){
+  const capa = i.fotos[0] ? `<img loading="lazy" src="${esc(foto(i.fotos[0]))}" alt="${esc(i.titulo)}" onerror="this.remove()">` : 'Sem foto';
+  const alug = (i.negocio||'').toLowerCase().startsWith('alug');
+  return `<a class="card" href="#/imovel/${encodeURIComponent(i.id)}">
+    <div class="foto">${capa}<span class="tag">${alug?'Aluguel':'Venda'}</span>${i.destaque?'<span class="tag dest">Destaque</span>':''}</div>
+    <div class="c"><div class="preco">${brl(i.preco)}${alug?'<small>/mês</small>':''}</div>
+    <div class="tit">${esc(i.titulo)}</div><div class="loc">${esc(i.bairro)}${i.bairro&&i.cidade?' · ':''}${esc(i.cidade)}</div>
+    <div class="carac"><span>🛏 ${esc(i.quartos||'-')}</span><span>🚿 ${esc(i.banheiros||'-')}</span><span>🚗 ${esc(i.vagas||'-')}</span><span>📐 ${esc(i.area||'-')} m²</span></div></div></a>`;
+}
+
+function telaLista(){
+  document.title = CONFIG.nome;
+  const tipos=[...new Set(IMOVEIS.map(i=>i.tipo).filter(Boolean))].sort();
+  const cidades=[...new Set(IMOVEIS.map(i=>i.cidade).filter(Boolean))].sort();
+  $('#app').innerHTML = `
+  <section class="hero"><div><h2>${esc(CONFIG.heroTitulo)}</h2><p>${esc(CONFIG.heroTexto)}</p>
+    <a class="btn" href="#imoveis" onclick="event.preventDefault();document.getElementById('imoveis').scrollIntoView({behavior:'smooth'})">Ver imóveis</a></div>
+    <div class="img"><img src="${esc(CONFIG.heroImagem)}" alt="" onerror="this.remove()"></div></section>
+  <h3 class="titulo-sec" id="imoveis">Nossos imóveis</h3>
+  <div class="filtros">
+    <div><label>Negócio</label><select id="f-neg"><option value="">Todos</option><option>Venda</option><option>Aluguel</option></select></div>
+    <div><label>Tipo</label><select id="f-tipo"><option value="">Todos</option>${tipos.map(t=>`<option>${esc(t)}</option>`).join('')}</select></div>
+    <div><label>Cidade</label><select id="f-cid"><option value="">Todas</option>${cidades.map(t=>`<option>${esc(t)}</option>`).join('')}</select></div>
+    <div><label>Quartos (mín.)</label><select id="f-q"><option value="0">Qualquer</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <div><label>Preço até (R$)</label><input id="f-p" type="number" min="0" placeholder="sem limite"></div>
+    <div><label>Buscar</label><input id="f-b" placeholder="bairro, palavra…"></div>
+  </div><div class="grade" id="grade"></div>`;
+  const aplicar=()=>{
+    const neg=$('#f-neg').value,tp=$('#f-tipo').value,ci=$('#f-cid').value,q=+$('#f-q').value,p=+$('#f-p').value,b=$('#f-b').value.toLowerCase();
+    const r=IMOVEIS.filter(i=>(!neg||(i.negocio||'').toLowerCase().startsWith(neg.toLowerCase().slice(0,4)))
+      &&(!tp||i.tipo===tp)&&(!ci||i.cidade===ci)&&(+i.quartos||0)>=q&&(!p||i.preco<=p)
+      &&(!b||(i.titulo+i.bairro+i.cidade+i.descricao).toLowerCase().includes(b)))
+      .sort((a,b)=>(!!b.destaque)-(!!a.destaque));
+    $('#grade').innerHTML = r.length? r.map(cardHTML).join('') : '<div class="vazio" style="grid-column:1/-1">Nenhum imóvel com esses filtros.</div>';
+  };
+  document.querySelectorAll('.filtros select,.filtros input').forEach(e=>e.addEventListener('input',aplicar));
+  aplicar();
+}
+
+let galIdx=0,galFotos=[];
+function mostrarFoto(n){
+  galIdx=(n+galFotos.length)%galFotos.length;
+  const g=$('#gr'); if(g) g.innerHTML = galFotos.length?`<img src="${esc(foto(galFotos[galIdx]))}" alt="">`:'Sem fotos';
+  document.querySelectorAll('.mini img').forEach((m,k)=>m.classList.toggle('ativa',k===galIdx));
+  if($('#lb').classList.contains('on')) $('#lbi').src=foto(galFotos[galIdx]);
+}
+
+function telaImovel(id){
+  const i=IMOVEIS.find(x=>x.id===id);
+  if(!i){ $('#app').innerHTML='<div class="vazio">Imóvel não encontrado. <a class="voltar" href="#/">Ver todos</a></div>'; return }
+  document.title = i.titulo+' | '+CONFIG.nome;
+  galFotos=i.fotos; galIdx=0;
+  const alug=(i.negocio||'').toLowerCase().startsWith('alug');
+  const msg=`Olá! Tenho interesse no imóvel "${i.titulo}" (${i.bairro||''}, ${i.cidade||''}) – ${location.href}`;
+  const dado=(r,v,suf='')=>v?`<div>${r}<b>${esc(v)}${suf}</b></div>`:'';
+  $('#app').innerHTML=`<a class="voltar" href="#/">← Todos os imóveis</a>
+  <div class="det">
+    <div class="galeria"><div class="grande" id="gr"></div>
+      <div class="mini">${i.fotos.map((f,k)=>`<img src="${esc(foto(f))}" data-k="${k}" alt="">`).join('')}</div>
+      <div class="sec box"><h3>Descrição</h3><p style="white-space:pre-line;margin:0">${esc(i.descricao)}</p></div>
+      ${i.comodidades.length?`<div class="sec box"><h3>Comodidades</h3><div class="chips">${i.comodidades.map(c=>`<span>${esc(c)}</span>`).join('')}</div></div>`:''}
+    </div>
+    <div><div class="box"><span class="chips"><span>${alug?'Aluguel':'Venda'}</span><span>${esc(i.tipo)}</span></span>
+      <h2 style="margin-top:10px">${esc(i.titulo)}</h2><div class="loc">${esc(i.bairro)}${i.bairro&&i.cidade?' · ':''}${esc(i.cidade)}</div>
+      <div class="preco">${brl(i.preco)}${alug?'<small>/mês</small>':''}</div>
+      <div class="loc">${i.condominio?'Condomínio: '+brl(i.condominio)+' · ':''}${i.iptu?'IPTU: '+brl(i.iptu):''}</div>
+      <div class="dados">${dado('Quartos',i.quartos)}${dado('Banheiros',i.banheiros)}${dado('Vagas',i.vagas)}${dado('Área',i.area,' m²')}</div>
+      <a class="btn" style="display:block;text-align:center" target="_blank" rel="noopener" href="${waLink(msg)}">💬 Tenho interesse (WhatsApp)</a>
+      ${CONFIG.email?`<a class="btn sec" style="display:block;text-align:center;margin-top:8px" href="mailto:${esc(CONFIG.email)}?subject=${encodeURIComponent('Interesse: '+i.titulo)}">✉ Enviar e-mail</a>`:''}
+      <button class="btn sec" style="width:100%;margin-top:8px" onclick="navigator.clipboard.writeText(location.href).then(()=>this.textContent='Link copiado ✓')">🔗 Copiar link deste imóvel</button>
+    </div></div></div>`;
+  mostrarFoto(0);
+  document.querySelectorAll('.mini img').forEach(m=>m.onclick=()=>mostrarFoto(+m.dataset.k));
+  $('#gr').onclick=()=>{ if(galFotos.length){ $('#lb').classList.add('on'); $('#lbi').src=foto(galFotos[galIdx]) } };
+}
+
+function rota(){
+  window.scrollTo(0,0);
+  const m=location.hash.match(/^#\/imovel\/(.+)$/);
+  m? telaImovel(decodeURIComponent(m[1])) : telaLista();
+}
+
+(async()=>{
+  $('#nome-site').firstChild.textContent=CONFIG.nome;
+  $('#sub-site').textContent=CONFIG.subtitulo;
+  const w=waLink('Olá! Vi seus imóveis no site e gostaria de mais informações.');
+  $('#wa-topo').href=w; $('#wa-fixo').href=w;
+  $('#rodape').textContent='© '+new Date().getFullYear()+' '+CONFIG.nome;
+  $('#lbx').onclick=()=>$('#lb').classList.remove('on');
+  $('#lbp').onclick=()=>{mostrarFoto(galIdx-1)};
+  $('#lbn').onclick=()=>{mostrarFoto(galIdx+1)};
+  document.addEventListener('keydown',e=>{ if(!$('#lb').classList.contains('on'))return;
+    if(e.key==='Escape')$('#lb').classList.remove('on'); if(e.key==='ArrowLeft')mostrarFoto(galIdx-1); if(e.key==='ArrowRight')mostrarFoto(galIdx+1)});
+  try{ await carregar(); rota(); window.addEventListener('hashchange',rota) }
+  catch(e){ $('#app').innerHTML='<div class="vazio">Não foi possível carregar os imóveis.<br><small>'+esc(e.message)+'</small></div>' }
+})();
+</script>
+</body>
+</html>

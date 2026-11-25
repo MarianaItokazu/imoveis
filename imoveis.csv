@@ -1,0 +1,6 @@
+id,status,titulo,negocio,tipo,cidade,bairro,preco,condominio,iptu,quartos,banheiros,vagas,area,descricao,comodidades,fotos,destaque
+001,ativo,Apartamento 3 quartos com varanda,Venda,Apartamento,Sua Cidade,Centro,520000,650,180,3,2,2,92,"Apartamento amplo e arejado, com varanda gourmet, cozinha planejada e sol da manhã.
+Próximo a mercados, escolas e transporte.","Varanda gourmet|Cozinha planejada|Portaria 24h|Academia|Salão de festas",001-1.jpg|001-2.jpg|001-3.jpg,sim
+002,ativo,Casa térrea com quintal,Venda,Casa,Sua Cidade,Jardim das Flores,780000,,320,4,3,3,210,"Casa térrea com quintal grande, churrasqueira e edícula nos fundos.","Quintal|Churrasqueira|Edícula|Portão eletrônico",002-1.jpg|002-2.jpg,
+003,ativo,Kitnet mobiliada perto da universidade,Aluguel,Kitnet,Sua Cidade,Bairro Universitário,1450,200,,1,1,0,28,"Kitnet mobiliada, com cama, armário e cozinha equipada. Contas de água e internet incluídas.","Mobiliada|Internet inclusa|Lavanderia coletiva",003-1.jpg,
+004,ativo,Sala comercial no centro,Aluguel,Comercial,Sua Cidade,Centro,2800,450,,0,1,1,45,"Sala comercial com recepção, banheiro e ar-condicionado, em prédio com elevador.","Ar-condicionado|Elevador|Recepção",,
